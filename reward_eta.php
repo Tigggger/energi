@@ -35,11 +35,10 @@
 	}
     }
 
-    $date = date("Y-m-d H:i");
     $minutes_to_add = floor($total_above / 10000);
-    $time = new DateTime($date);
-    $time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
-    $next_reward = $time->format('l jS M Y @ H:i');
+    $hours = floor($minutes_to_add / 60);
+    $minutes = floor($minutes_to_add % 60);
+    $eta = str_pad($hours, 2, "0", STR_PAD_LEFT) . " hours " . str_pad($minutes, 2, "0", STR_PAD_LEFT) . " minutes";
     $frequency = ($collateral / 10000);
     $hours = floor($frequency / 60);
     $minutes = floor($frequency % 60);
@@ -48,7 +47,7 @@
 
     echo "<p>My Rank: ".$my_rank."</p>";
     echo "<p>My Collateral: ".number_format($my_collateral,0)."</p>";
-    echo "<p>Next Reward: ".$next_reward."</p>";
+    echo "<p>Next Reward: ".$eta."</p>";
     echo "<p>Next Payout: ".(0.914 * ($my_collateral / 1000))." NRG</p>";
     echo "<p>Active Collateral: ".number_format($active_collateral,0)."</p>";
     echo "<p>Reward Frequency: ".$frequency."</p>";
